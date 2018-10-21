@@ -19,3 +19,6 @@ data is transferred between the processes using the FFI (serialization) defined 
 
 The linking data type is MessagePack serialization https://msgpack.org/
 (the intial implementation will be more basic, with no serialization and supporting only string input/output)
+
+references:
+https://brandonwamboldt.ca/how-linux-pipes-work-under-the-hood-1518/

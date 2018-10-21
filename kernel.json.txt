@@ -1,0 +1,4 @@
+{"argv":["python","-m","hs4Jupyter", "-f", "{connection_file}"],
+ "display_name":"Haskell",
+ "language":"Haskell"
+}

@@ -1,5 +1,6 @@
 from ipykernel.kernelbase import Kernel
 import subprocess
+    
 
 class Hs4Jupyter(Kernel):
     # automate some of these in future
@@ -21,8 +22,8 @@ class Hs4Jupyter(Kernel):
 
     def _start_Haskell(self):
         kernelpath = 'put path here' # use sys function etc
-        self.kernelInstance = subprocess.Popen(kernelpath, bufsize=-1, executable=None, stdin=PIPE, 
-                                       stdout=PIPE, stderr=PIPE, preexec_fn=None, 
+        self.kernelInstance = subprocess.Popen(kernelpath, bufsize=-1, executable=None, stdin=subprocess.PIPE, 
+                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE, preexec_fn=None, 
                                        close_fds=True, shell=False, cwd=None, env=None, 
                                        universal_newlines=True, startupinfo=None, 
                                        creationflags=0, restore_signals=True, 
@@ -31,10 +32,13 @@ class Hs4Jupyter(Kernel):
 
     def do_execute(self, code, silent, store_history=True, user_expressions=None,
                    allow_stdin=False):
-        # run code using the PIPE
+        # run code using the PIPE (inside Popen object self.kernelInstance)
     	if not silent:
 	    #code = str.rstrip(str.rstrip(code)) $ strip string of useless whitespace. (necessary?)
-	    output = 'kernel stdout here'
+	    # run code in kernel
+            self.kernelInstance.stdin.write(code+"\n")
+            # read output
+            output = self.kernelInstance.stdin.readline()
 	    # send the output to stdout
 	    stream_content = {'name': 'stdout', 'text': output}
 	    # send_response is used for printing to the stdio (notebook)
