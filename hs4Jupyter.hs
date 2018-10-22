@@ -1,16 +1,16 @@
 module Main where
 
 import Data.Either
+import Control.Monad
+
+--definition of interact (included in prelude)
+--interact g = (liftM g getLine) >>= putStrLn >> f g
 -- start event loop
 main :: IO ()
-main = loop message
-
-message = "Echo program - enter q to quit"
 -- echo back the input string
-loop :: String -> IO ()
-loop msg= putStrLn msg >> getLine >>= quitOrloop
+main = getLine >>= quitOrloop
 
--- checks wether 'q' was entered and calls loop otherwise
+-- check if 'q' was entered and call main otherwise
 quitOrloop :: String -> IO ()
 quitOrloop xs | xs == "q" = putStrLn "Goodbye!"
-              | otherwise = loop xs
+              | otherwise = putStrLn xs >> main

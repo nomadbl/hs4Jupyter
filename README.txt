@@ -1,5 +1,12 @@
 Haskell GHC kernel for jupyter notebook
 
+Installation
+--------------
+unpack and run "python setup.py" in shell/cmd
+
+Information
+--------------
+
 The implementation is based on the IPython kernel machinery as described in https://jupyter-client.readthedocs.io/en/latest/wrapperkernels.html
 
 The Haskell kernel is contained in a .so (*nix)/.dll(win32) which is called into by python using the FFI defined by https://github.com/nh2/call-haskell-from-anything#usage
