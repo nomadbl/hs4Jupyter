@@ -5,12 +5,9 @@ import Control.Monad
 
 --definition of interact (included in prelude)
 --interact g = (liftM g getLine) >>= putStrLn >> f g
--- start event loop
+when' = flip when
+-- event loop
 main :: IO ()
--- echo back the input string
-main = getLine >>= quitOrloop
-
--- check if 'q' was entered and call main otherwise
-quitOrloop :: String -> IO ()
-quitOrloop xs | xs == "q" = putStrLn "Goodbye!"
-              | otherwise = putStrLn xs >> main
+-- echo back the input string and nothing if str="q"
+main = getLine >>= \s -> (putStrLn (s++"\n") >> main ) `when'` (notquit s)
+                 where notquit s = (s /= "q")
