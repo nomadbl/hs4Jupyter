@@ -1,13 +1,19 @@
+{-# LANGUAGE OverloadedStrings #-}
+
+-- start up the kernel
+
 module Main where
 
-import Data.Either
 import Control.Monad
+import System.ZMQ4.Monadic
 
---definition of interact (included in prelude)
---interact g = (liftM g getLine) >>= putStrLn >> f g
-when' = flip when
--- event loop
 main :: IO ()
--- echo back the input string and nothing if str="q"
-main = getLine >>= \s -> (putStrLn (s++"\n") >> main ) `when'` (notquit s)
-                 where notquit s = (s /= "q")
+main = runZMQ helloZMQ
+
+helloZMQ :: 
+liftIO (putStrLn "connecting to hello world server...") >> 
+       socket Req >>= \requester -> connect requester "tcp://localhost:5555" >>
+       forM_ [1..10] $ \i -> return $
+             liftIO . putStrLn $ "Sending Hello " ++ show i ++ "…" >>
+             send requester [] "Hello" >> receive requester >>
+             liftIO . putStrLn $ "Received World " ++ show i
